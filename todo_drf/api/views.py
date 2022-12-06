@@ -16,8 +16,17 @@ def apiOverView(request):
         'Delete':'/task-delete/<str:pk>'
     }
     return Response(api_urls)
+
+
 @api_view(['GET'])
 def taskList(request):
     tasks = Task.objects.all()
     serializers = TaskSerializer(tasks, many=True)
     return Response(serializers.data)
+
+@api_view(['GET'])
+def taskDetail(request,pk):
+    tasks = Task.objects.get(id=pk)
+    serializers = TaskSerializer(tasks, many=False)
+    return Response(serializers.data)
+
