@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .serializers import TaskSerializer
+
 from .models import Task
 # Create your views here.
 
@@ -30,6 +32,7 @@ def taskDetail(request,pk):
     serializers = TaskSerializer(tasks, many=False)
     return Response(serializers.data)
 
+
 @api_view(['POST'])
 def taskCreate(request):
    
@@ -52,3 +55,4 @@ def taskDelete(request,pk):
     serializers = TaskSerializer(instance=task,data=request.data)
     task.delete()
     return Response(serializers.data)
+
