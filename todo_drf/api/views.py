@@ -30,3 +30,25 @@ def taskDetail(request,pk):
     serializers = TaskSerializer(tasks, many=False)
     return Response(serializers.data)
 
+@api_view(['POST'])
+def taskCreate(request):
+   
+    serializers = TaskSerializer(data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+
+@api_view(['POST'])
+def taskUpdate(request,pk):
+    task = Task.objects.get(id=pk)
+    serializers = TaskSerializer(instance=task,data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+    return Response(serializers.data)
+
+@api_view(['DELETE'])
+def taskDelete(request,pk):
+    task = Task.objects.get(id=pk)
+    serializers = TaskSerializer(instance=task,data=request.data)
+    task.delete()
+    return Response(serializers.data)
